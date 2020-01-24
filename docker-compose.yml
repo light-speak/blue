@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  db1:
+    image: mysql:5.7
+    ports:
+      - 33061:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "LTYlty0123"
+    restart: unless-stopped
+    networks:
+      mysql-network:
+        ipv4_address: 172.20.0.101
+    volumes:
+      - /Users/linty/data/blue/mysql/db1/db:/var/lib/mysql
+      - /Users/linty/data/blue/mysql/db1/conf:/etc/mysql/conf.d
+      - /Users/linty/data/blue/mysql/db1/logs:/var/log/mysql
+  db2:
+    image: mysql:5.7
+    ports:
+      - 33062:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "LTYlty0123"
+    restart: unless-stopped
+    networks:
+      mysql-network:
+        ipv4_address: 172.20.0.102
+    volumes:
+      - /Users/linty/data/blue/mysql/db2/db:/var/lib/mysql
+      - /Users/linty/data/blue/mysql/db2/conf:/etc/mysql/conf.d
+      - /Users/linty/data/blue/mysql/db2/logs:/var/log/mysql
+  db3:
+    image: mysql:5.7
+    ports:
+      - 33063:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "LTYlty0123"
+    restart: unless-stopped
+    networks:
+      mysql-network:
+        ipv4_address: 172.20.0.103
+    volumes:
+      - /Users/linty/data/blue/mysql/db3/db:/var/lib/mysql
+      - /Users/linty/data/blue/mysql/db3/conf:/etc/mysql/conf.d
+      - /Users/linty/data/blue/mysql/db3/logs:/var/log/mysql
+
+
+networks:
+  mysql-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
