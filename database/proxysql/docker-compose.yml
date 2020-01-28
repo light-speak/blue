@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+  proxysql1:
+    image: severalnines/proxysql
+    ports:
+      - 16032:6032
+      - 16033:6033
+    restart: unless-stopped
+    networks:
+      mysql_mysql-network:
+        ipv4_address: 172.20.0.201
+    volumes:
+      - ./proxysql.cnf:/etc/proxysql.cnf
+      - ./proxysql_groupreplication_checker.sh:/var/lib/proxysql/proxysql_groupreplication_checker.sh
+
+  proxysql2:
+    image: severalnines/proxysql
+    ports:
+      - 26032:6032
+      - 26033:6033
+    restart: unless-stopped
+    networks:
+      mysql_mysql-network:
+        ipv4_address: 172.20.0.202
+    volumes:
+      - ./proxysql.cnf:/etc/proxysql.cnf
+      - ./proxysql_groupreplication_checker.sh:/var/lib/proxysql/proxysql_groupreplication_checker.sh
+
+networks:
+  mysql_mysql-network:
+    external: true

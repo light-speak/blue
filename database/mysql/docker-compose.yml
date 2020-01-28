@@ -1,6 +1,7 @@
 version: '3.7'
 
 services:
+
   db1:
     image: mysql:5.7
     ports:
@@ -43,7 +44,6 @@ services:
       - /Users/linty/data/blue/mysql/db3/db:/var/lib/mysql
       - /Users/linty/data/blue/mysql/db3/conf:/etc/mysql/conf.d
       - /Users/linty/data/blue/mysql/db3/logs:/var/log/mysql
-
 
 networks:
   mysql-network:
