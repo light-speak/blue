@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  consul1:
+    image: consul
+    container_name: consul-1
+    networks:
+      - blue-network
+    command: agent -server -bootstrap-expect=3 -node=consul-1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+  consul2:
+    image: consul
+    container_name: consul-2
+    networks:
+      - blue-network
+    command: agent -server -retry-join=consul-1 -node=consul-2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+  consul3:
+    image: consul
+    container_name: consul-3
+    networks:
+      - blue-network
+    command: agent -server -retry-join=consul-1 -node=consul-3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul1
+  consul4:
+    image: consul
+    container_name: consul-4
+    command: agent -retry-join=consul-1 -node=consul-4 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui
+    ports:
+      - 8500:8500
+    depends_on:
+      - consul2
+      - consul3
+    networks:
+      - blue-network
+
+networks:
+  blue-network:
+    external: true

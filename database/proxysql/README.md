@@ -4,16 +4,17 @@
 ## 部署
 使用和MySQL同一个网络环境
 
-docker镜像默认不自带mysql
 
 使用以下命令管理
 ```
-    mysql -h127.0.0.1 -P16032 -uradmin -pLTYlty0123 --prompt "ProxySQL Admin>"
+mysql -h127.0.0.1 -P16032 -uradmin -pLTYlty0123 --prompt "ProxySQL Admin>"
 ```
 在 MGR 集群中创建proxysql使用的账号
 ```
 create user 'proxysql'@'%' identified by 'proxysql';
 grant all on *.* to 'proxysql'@'%';
+create user 'monitor'@'%' identified by 'monitor';
+grant all on *.* to 'monitor'@'%';
 flush privileges;
 ```
 在MGR集群中，执行addition_to_sys.sql  ，创建系统视图
@@ -67,6 +68,7 @@ github 地址：
 （同一时间多写）
 https://raw.githubusercontent.com/ZzzCrazyPig/proxysql_groupreplication_checker/master/proxysql_groupreplication_checker.sh
 chmod a+x /var/lib/proxysql/proxysql_groupreplication_checker.sh
+默认这部可省略
 insert into scheduler(id, interval_ms, filename, arg1,arg2,arg3,arg4,arg5) values (1,'10000','/var/lib/proxysql/proxysql_groupreplication_checker.sh','1','2','1','1','/var/lib/proxysql/proxysql_groupreplication_checker.log');
 load scheduler to runtime;
 save scheduler to disk;

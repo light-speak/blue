@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+
+networks:
+  blue-network:
+    name: 'blue-network'
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

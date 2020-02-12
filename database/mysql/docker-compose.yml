@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: "LTYlty0123"
     restart: unless-stopped
     networks:
-      mysql-network:
+      blue-network:
         ipv4_address: 172.20.0.101
     volumes:
       - /Users/linty/data/blue/mysql/db1/db:/var/lib/mysql
@@ -23,8 +23,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "LTYlty0123"
     restart: unless-stopped
+    depends_on:
+      - db1
     networks:
-      mysql-network:
+      blue-network:
         ipv4_address: 172.20.0.102
     volumes:
       - /Users/linty/data/blue/mysql/db2/db:/var/lib/mysql
@@ -37,8 +39,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "LTYlty0123"
     restart: unless-stopped
+    depends_on:
+      - db2
     networks:
-      mysql-network:
+      blue-network:
         ipv4_address: 172.20.0.103
     volumes:
       - /Users/linty/data/blue/mysql/db3/db:/var/lib/mysql
@@ -46,7 +50,5 @@ services:
       - /Users/linty/data/blue/mysql/db3/logs:/var/log/mysql
 
 networks:
-  mysql-network:
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
+  blue-network:
+    external: true

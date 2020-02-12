@@ -9,7 +9,7 @@ services:
       - 16033:6033
     restart: unless-stopped
     networks:
-      mysql_mysql-network:
+      blue-network:
         ipv4_address: 172.20.0.201
     volumes:
       - ./proxysql.cnf:/etc/proxysql.cnf
@@ -22,12 +22,12 @@ services:
       - 26033:6033
     restart: unless-stopped
     networks:
-      mysql_mysql-network:
+      blue-network:
         ipv4_address: 172.20.0.202
     volumes:
       - ./proxysql.cnf:/etc/proxysql.cnf
       - ./proxysql_groupreplication_checker.sh:/var/lib/proxysql/proxysql_groupreplication_checker.sh
 
 networks:
-  mysql_mysql-network:
+  blue-network:
     external: true
